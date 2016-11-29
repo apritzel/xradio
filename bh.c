@@ -737,7 +737,8 @@ rx:
 				bh_printk(XRADIO_DBG_ALWY, "[DUMP] msgid 0x%.4X ifid %d len %d\n", 
 				          msgid, ifid, *p);
 				print_hex_dump_bytes("<-- ", DUMP_PREFIX_NONE,
-				                     data, min(wsm_len, hw_priv->wsm_dump_max_size));
+				                     data,
+						     min_t(size_t, wsm_len, hw_priv->wsm_dump_max_size));
 			}
 #endif /* CONFIG_XRADIO_DEBUG */
 
