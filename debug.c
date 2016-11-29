@@ -95,17 +95,17 @@ static void xradio_queue_status_show(struct seq_file *seq,
 {
 	int i, if_id;
 	seq_printf(seq, "Queue       %d:\n", q->queue_id);
-	seq_printf(seq, "  capacity: %d\n", q->capacity);
-	seq_printf(seq, "  queued:   %d\n", q->num_queued);
-	seq_printf(seq, "  pending:  %d\n", q->num_pending);
-	seq_printf(seq, "  sent:     %d\n", q->num_sent);
+	seq_printf(seq, "  capacity: %zd\n", q->capacity);
+	seq_printf(seq, "  queued:   %zd\n", q->num_queued);
+	seq_printf(seq, "  pending:  %zd\n", q->num_pending);
+	seq_printf(seq, "  sent:     %zd\n", q->num_sent);
 	seq_printf(seq, "  locked:   %s\n", q->tx_locked_cnt ? "yes" : "no");
 	seq_printf(seq, "  overfull: %s\n", q->overfull ? "yes" : "no");
 	seq_puts(seq,   "  link map: 0-> ");
 	for (if_id = 0; if_id < XRWL_MAX_VIFS; if_id++) {
 		for (i = 0; i < q->stats->map_capacity; ++i)
 			seq_printf(seq, "%.2d ", q->link_map_cache[if_id][i]);
-		seq_printf(seq, "<-%d\n", q->stats->map_capacity);
+		seq_printf(seq, "<-%zd\n", q->stats->map_capacity);
 	}
 }
 
@@ -118,7 +118,7 @@ static void xradio_debug_print_map(struct seq_file *seq,
 	seq_printf(seq, "%s0-> ", label);
 	for (i = 0; i < priv->hw_priv->tx_queue_stats.map_capacity; ++i)
 		seq_printf(seq, "%s ", (map & BIT(i)) ? "**" : "..");
-	seq_printf(seq, "<-%d\n",
+	seq_printf(seq, "<-%zd\n",
 		   priv->hw_priv->tx_queue_stats.map_capacity - 1);
 }
 
@@ -276,7 +276,7 @@ static int xradio_status_show_common(struct seq_file *seq, void *v)
 	spin_lock(&hw_priv->wsm_cmd.lock);
 	seq_printf(seq, "WSM status: %s\n",
 		hw_priv->wsm_cmd.done ? "idle" : "active");
-	seq_printf(seq, "WSM cmd:    0x%.4X (%d bytes)\n",
+	seq_printf(seq, "WSM cmd:    0x%.4X (%zd bytes)\n",
 		hw_priv->wsm_cmd.cmd, hw_priv->wsm_cmd.len);
 	seq_printf(seq, "WSM retval: %d\n",
 		hw_priv->wsm_cmd.ret);

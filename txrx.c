@@ -436,7 +436,7 @@ static void tx_policy_build(const struct xradio_common *hw_priv,
 		            tmp_rate->bitrate/10, tmp_rate->bitrate%10, retries);
 	}
 	
-	txrx_printk(XRADIO_DBG_MSG, "[TX policy] Dst Policy (%d): " \
+	txrx_printk(XRADIO_DBG_MSG, "[TX policy] Dst Policy (%zd): " \
 		"%d:%d, %d:%d, %d:%d, %d:%d, %d:%d\n",
 		count,
 		rates[0].idx, rates[0].count,
@@ -879,7 +879,7 @@ xradio_tx_h_crypt(struct xradio_vif *priv,
 		txrx_printk(XRADIO_DBG_ERROR,
 			"Bug: no space allocated for crypto headers.\n"
 			"headroom: %d, tailroom: %d, "
-			"req_headroom: %d, req_tailroom: %d\n"
+			"req_headroom: %zd, req_tailroom: %zd\n"
 			"Please fix it in xradio_get_skb().\n",
 			skb_headroom(t->skb), skb_tailroom(t->skb),
 			iv_len + WSM_TX_EXTRA_HEADROOM, icv_len);
@@ -889,7 +889,7 @@ xradio_tx_h_crypt(struct xradio_vif *priv,
 		u8 *p;
 		txrx_printk(XRADIO_DBG_ERROR,
 			"Slowpath: tailroom is not big enough. "
-			"Req: %d, got: %d.\n",
+			"Req: %zd, got: %d.\n",
 			icv_len, skb_tailroom(t->skb));
 
 		p = skb_push(t->skb, offset);

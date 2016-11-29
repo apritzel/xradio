@@ -385,12 +385,14 @@ static struct sk_buff *xradio_get_skb(struct xradio_common *hw_priv, size_t len)
 		} else {
 			skb = xradio_get_resv_skb(hw_priv, alloc_len);
 			if (skb) {
-				bh_printk(XRADIO_DBG_WARN,"%s get skb_reserved(%d)!\n",
+				bh_printk(XRADIO_DBG_WARN,
+					  "%s get skb_reserved(%zd)!\n",
 				          __FUNCTION__, alloc_len);
 				skb_reserve(skb, WSM_TX_EXTRA_HEADROOM + 8 /* TKIP IV */
 						    - WSM_RX_EXTRA_HEADROOM);
 			} else {
-				bh_printk(XRADIO_DBG_ERROR,"%s xr_alloc_skb failed(%d)!\n",
+				bh_printk(XRADIO_DBG_ERROR,
+					  "%s xr_alloc_skb failed(%zd)!\n",
 				          __FUNCTION__, alloc_len);
 			}
 		}
@@ -662,7 +664,9 @@ rx:
 			}
 			if (SYS_WARN((read_len < sizeof(struct wsm_hdr)) ||
 					(read_len > EFFECTIVE_BUF_SIZE))) {
-				bh_printk(XRADIO_DBG_ERROR, "ERR: Invalid read len: %d", read_len);
+				bh_printk(XRADIO_DBG_ERROR,
+					  "ERR: Invalid read len: %zd",
+					  read_len);
 				hw_priv->bh_error = __LINE__;
 				break;
 			}
@@ -681,7 +685,9 @@ rx:
 #endif /* CONFIG_XRADIO_NON_POWER_OF_TWO_BLOCKSIZES */
 			/* Check if not exceeding XRADIO capabilities */
 			if (WARN_ON_ONCE(alloc_len > EFFECTIVE_BUF_SIZE)) {
-				bh_printk(XRADIO_DBG_MSG, "ERR: Read aligned len: %d\n", alloc_len);
+				bh_printk(XRADIO_DBG_MSG,
+					  "ERR: Read aligned len: %zd\n",
+					  alloc_len);
 			}
 
 			/* Get skb buffer. */
@@ -714,7 +720,8 @@ rx:
 			wsm = (struct wsm_hdr *)data;
 			wsm_len = __le32_to_cpu(wsm->len);
 			if (SYS_WARN(wsm_len > read_len)) {
-				bh_printk(XRADIO_DBG_ERROR, "wsm_len=%d.\n", wsm_len);
+				bh_printk(XRADIO_DBG_ERROR, "wsm_len=%zd.\n",
+					  wsm_len);
 				hw_priv->bh_error = __LINE__;
 				break;
 			}
@@ -855,7 +862,9 @@ tx:
 #endif /* CONFIG_XRADIO_NON_POWER_OF_TWO_BLOCKSIZES */
 				/* Check if not exceeding XRADIO capabilities */
 				if (tx_len > EFFECTIVE_BUF_SIZE) {
-					bh_printk(XRADIO_DBG_WARN, "Write aligned len: %d\n", tx_len);
+					bh_printk(XRADIO_DBG_WARN,
+						  "Write aligned len: %zd\n",
+						  tx_len);
 				}
 
 				/* Make sequence number. */

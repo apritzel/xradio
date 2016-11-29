@@ -23,8 +23,8 @@ struct xr_file *xr_fileopen(const char *path, int open_mode, umode_t mode)
 
 	xr_fp = xr_kmalloc(sizeof(struct xr_file), false);
 	if (!xr_fp) {
-		xradio_dbg(XRADIO_DBG_ERROR, "%s:xr_kmalloc failed,size=%d!\n", 
-		           __func__, sizeof(struct xr_file));
+		xradio_dbg(XRADIO_DBG_ERROR, "%s:xr_kmalloc failed,size=%zd!\n",
+			   __func__, sizeof(struct xr_file));
 		return NULL;
 	}
 	memset(xr_fp, 0, sizeof(struct xr_file));

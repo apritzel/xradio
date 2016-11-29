@@ -182,7 +182,7 @@ static int xradio_parse_sdd(struct xradio_common *hw_priv, u32 *dpll)
 		pElement = FIND_NEXT_ELT(pElement);
 	}
 	
-	xradio_dbg(XRADIO_DBG_MSG, "sdd size=%d parse len=%d.\n", 
+	xradio_dbg(XRADIO_DBG_MSG, "sdd size=%zd parse len=%d.\n",
 	           hw_priv->sdd->size, parsedLength);
 
 	//
@@ -397,7 +397,7 @@ static int xradio_bootloader(struct xradio_common *hw_priv)
 	}
 #endif
 
-	xradio_dbg(XRADIO_DBG_NIY, "%s: bootloader size = %d, loopcount = %d\n",
+	xradio_dbg(XRADIO_DBG_NIY, "%s: bootloader size = %zd, loopcount = %zd\n",
 	          __func__,bootloader->size, (bootloader->size)/4);
 
 	/* Down bootloader. */

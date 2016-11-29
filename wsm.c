@@ -1792,15 +1792,15 @@ int wsm_cmd_send(struct xradio_common *hw_priv,
 	int ret;
 
 	if (cmd == 0x0006 || cmd == 0x0005) /* Write/Read MIB */
-		wsm_printk(XRADIO_DBG_MSG, ">>> 0x%.4X [MIB: 0x%.4X] (%d)\n",
+		wsm_printk(XRADIO_DBG_MSG, ">>> 0x%.4X [MIB: 0x%.4X] (%zd)\n",
 			cmd, __le16_to_cpu(((__le16 *)buf->begin)[2]),
 			buf_len);
 	else
-		wsm_printk(XRADIO_DBG_MSG, ">>> 0x%.4X (%d)\n", cmd, buf_len);
+		wsm_printk(XRADIO_DBG_MSG, ">>> 0x%.4X (%zd)\n", cmd, buf_len);
 
 #ifdef HW_RESTART
 	if (hw_priv->hw_restart) {
-		wsm_printk(XRADIO_DBG_NIY, "hw reset!>>> 0x%.4X (%d)\n", cmd, buf_len);
+		wsm_printk(XRADIO_DBG_NIY, "hw reset!>>> 0x%.4X (%zd)\n", cmd, buf_len);
 		wsm_buf_reset(buf);
 		return 0;  /*return success, don't process cmd in power off.*/
 	}
@@ -1808,7 +1808,7 @@ int wsm_cmd_send(struct xradio_common *hw_priv,
 
 	if (unlikely(hw_priv->bh_error)) {
 		wsm_buf_reset(buf);
-		wsm_printk(XRADIO_DBG_ERROR, "bh error!>>> 0x%.4X (%d)\n", cmd, buf_len);
+		wsm_printk(XRADIO_DBG_ERROR, "bh error!>>> 0x%.4X (%zd)\n", cmd, buf_len);
 		return -ETIMEDOUT;
 	}
 
@@ -1878,7 +1878,7 @@ int wsm_cmd_send(struct xradio_common *hw_priv,
 		spin_unlock(&hw_priv->wsm_cmd.lock);
 
 		wsm_printk(XRADIO_DBG_ERROR,
-			   "***CMD timeout!>>> 0x%.4X (%d), buf_use=%d, bh_state=%d\n",
+			   "***CMD timeout!>>> 0x%.4X (%zd), buf_use=%d, bh_state=%d\n",
 			   cmd, buf_len, hw_priv->hw_bufs_used, hw_priv->bh_error);
 		/* Race condition check to make sure _confirm is not called
 		 * after exit of _send */
@@ -3169,7 +3169,7 @@ int wsm_get_tx(struct xradio_common *hw_priv, u8 **data,
 					cpu_to_le16(IEEE80211_FCTL_MOREDATA);
 				}
 			}
-			wsm_printk(XRADIO_DBG_MSG, ">>> 0x%.4X (%d) %p %c\n",
+			wsm_printk(XRADIO_DBG_MSG, ">>> 0x%.4X (%zd) %p %c\n",
 				0x0004, *tx_len, *data,
 				wsm->more ? 'M' : ' ');
 			++count;
