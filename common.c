@@ -32,7 +32,8 @@ struct xr_file *xr_fileopen(const char *path, int open_mode, umode_t mode)
 	//open file.
 	xr_fp->fp = filp_open(path, open_mode, mode);
 	if (IS_ERR(xr_fp->fp)) {
-		xradio_dbg(XRADIO_DBG_ERROR, "filp_open failed(%d)\n", (int)xr_fp->fp);
+		xradio_dbg(XRADIO_DBG_ERROR, "filp_open failed(%ld)\n",
+			   PTR_ERR(xr_fp->fp));
 		kfree(xr_fp);
 		return NULL;
 	}
@@ -126,8 +127,10 @@ int access_file(char *path, char *buffer, int size, int isRead)
 		fp = filp_open(path, O_CREAT|O_WRONLY, S_IRUSR|S_IWUSR);
 
 	if (IS_ERR(fp)) {
-		if ((int)fp != -ENOENT)
-			xradio_dbg(XRADIO_DBG_ERROR, "can't open %s, failed(%d)\n", path, (int)fp);
+		if (PTR_ERR(fp) != -ENOENT)
+			xradio_dbg(XRADIO_DBG_ERROR,
+				   "can't open %s, failed(%ld)\n",
+				   path, PTR_ERR(fp));
 		return -1;
 	}
 
