@@ -20,7 +20,6 @@
 #include <linux/mmc/card.h>
 #include <linux/mmc/sdio.h>
 #include <linux/spinlock.h>
-#include <asm/mach-types.h>
 #include <net/mac80211.h>
 
 #include "platform.h"
