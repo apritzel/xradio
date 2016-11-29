@@ -2325,7 +2325,7 @@ static int xradio_status_show_priv(struct seq_file *seq, void *v)
 			priv->mode == NL80211_IFTYPE_MESH_POINT ||
 			priv->mode == NL80211_IFTYPE_P2P_GO)
 		seq_printf(seq, "SSID:       %.*s\n",
-			priv->ssid_length, priv->ssid);
+			(int)priv->ssid_length, priv->ssid);
 
 	for (i = 0; i < 4; ++i) {
 		seq_printf(seq, "EDCA(%d):    %d, %d, %d, %d, %d\n", i,

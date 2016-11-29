@@ -2109,7 +2109,7 @@ int wsm_handle_exception(struct xradio_common *hw_priv, u8 *data, size_t len)
 		           reason_str[reason]);
 	} else {
 		wsm_printk(XRADIO_DBG_ERROR, "Firmware assert at %.*s, line %d, reason=0x%x\n",
-			       sizeof(fname), fname, reg[1], reg[2]);
+			       (int)sizeof(fname), fname, reg[1], reg[2]);
 	}
 
 	for (i = 0; i < 12; i += 4) {
