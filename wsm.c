@@ -2291,7 +2291,7 @@ int wsm_handle_rx(struct xradio_common *hw_priv, int id,
 	wsm_buf.data = (u8 *)&wsm[1];
 	wsm_buf.end = &wsm_buf.begin[__le32_to_cpu(wsm->len)];
 
-	wsm_printk(XRADIO_DBG_MSG, "<<< 0x%.4X (%d)\n", id,
+	wsm_printk(XRADIO_DBG_MSG, "<<< 0x%.4X (%ld)\n", id,
 			wsm_buf.end - wsm_buf.begin);
 
 #if defined(DGB_XRADIO_HWT)
