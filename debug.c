@@ -2910,8 +2910,8 @@ void xradio_parse_frame(u8* mac_data, u8 iv_len, u16 flags, u8 if_id)
 	struct ieee80211_hdr *frame = (struct ieee80211_hdr *)mac_data;
 	u16  fctl = frame->frame_control;
 
-	memset(frame_msg, 0, sizeof(frame_msg));
-	memset(proto_msg, 0, sizeof(proto_msg));
+	memset(frame_msg, 0, 512);
+	memset(proto_msg, 0, 512);
 
 	if(ieee80211_is_data(fctl)) {
 		u8  machdrlen = ieee80211_hdrlen(fctl);
